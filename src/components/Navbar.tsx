@@ -27,12 +27,13 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -48,6 +49,7 @@ const Navbar: React.FC = () => {
         <a 
           href="#home" 
           className="font-bold text-2xl"
+          onClick={(e) => handleNavigation(e, "#home")}
         >
           <img 
             src="/assets/logo.png" 
@@ -62,6 +64,7 @@ const Navbar: React.FC = () => {
             <a
               key={item.name}
               href={item.href}
+              onClick={(e) => handleNavigation(e, item.href)}
               className="text-futuristic-text-secondary hover:text-futuristic-blue transition-colors duration-300 text-sm font-medium"
             >
               {item.name}
@@ -69,38 +72,34 @@ const Navbar: React.FC = () => {
           ))}
         </div>
 
-        {/* Mobile Navigation using Sheet component */}
-        <div className="md:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <button 
-                className="text-futuristic-text-primary focus:outline-none menu-button"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-              >
-                <Menu size={24} />
-              </button>
-            </SheetTrigger>
-            <SheetContent 
-              side="right" 
-              className="bg-futuristic-darker/95 backdrop-blur-xl border-l border-white/10 p-0 w-[85%] sm:max-w-sm"
+        {/* Mobile Navigation */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild className="md:hidden">
+            <button 
+              className="text-white hover:text-futuristic-blue focus:outline-none transition-colors"
+              aria-label="Toggle menu"
             >
-              <div className="flex flex-col justify-center h-full p-6">
-                <div className="flex flex-col items-center space-y-8 py-10">
-                  {navItems.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={closeMenu}
-                      className="text-futuristic-text-primary hover:text-futuristic-blue transition-colors duration-300 text-2xl font-medium"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+              <Menu size={24} />
+            </button>
+          </SheetTrigger>
+          <SheetContent 
+            side="right"
+            className="w-[300px] bg-futuristic-darker/95 backdrop-blur-xl border-l border-white/10 p-6"
+          >
+            <div className="flex flex-col space-y-8 mt-8">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavigation(e, item.href)}
+                  className="text-xl text-white hover:text-futuristic-blue transition-colors duration-300"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </nav>
   );

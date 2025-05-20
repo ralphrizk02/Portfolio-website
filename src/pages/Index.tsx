@@ -48,25 +48,25 @@ const Index: React.FC = () => {
     
     // Observe all sections with the data-animate attribute
     document.querySelectorAll("section[data-animate]").forEach((element) => {
-      // Set initial state - invisible and translated
-      if (element.classList.contains("animate-fade-in")) {
-        element.classList.remove("animate-fade-in");
-      }
-      
-      // Add data attribute for section index to apply different animations
-      const sectionIndex = Array.from(document.querySelectorAll('section[data-animate]'))
-        .findIndex(section => section === element);
-      
-      // Use setAttribute for styles instead of direct style property access
-      if (sectionIndex % 2 === 0) {
-        (element as HTMLElement).style.transform = "translateX(-50px)";
+      // Only apply animation on screens >= 768px (md: breakpoint)
+      if (window.innerWidth >= 768) {
+        if (element.classList.contains("animate-fade-in")) {
+          element.classList.remove("animate-fade-in");
+        }
+        const sectionIndex = Array.from(document.querySelectorAll('section[data-animate]'))
+          .findIndex(section => section === element);
+        if (sectionIndex % 2 === 0) {
+          (element as HTMLElement).style.transform = "translateX(-50px)";
+        } else {
+          (element as HTMLElement).style.transform = "translateX(50px)";
+        }
+        (element as HTMLElement).style.opacity = "0";
+        (element as HTMLElement).style.transition = "transform 1s ease-out, opacity 1s ease-out";
       } else {
-        (element as HTMLElement).style.transform = "translateX(50px)";
+        // On mobile, show immediately
+        (element as HTMLElement).style.transform = "none";
+        (element as HTMLElement).style.opacity = "1";
       }
-      
-      (element as HTMLElement).style.opacity = "0";
-      (element as HTMLElement).style.transition = "transform 1s ease-out, opacity 1s ease-out";
-      
       appearOnScroll.observe(element);
     });
     
