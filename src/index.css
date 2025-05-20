@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 35% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 35% 7%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 35% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-futuristic-dark text-futuristic-text-primary antialiased;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-futuristic-darker;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-futuristic-blue/50 rounded-full;
+    backdrop-filter: blur(12px);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-futuristic-blue;
+  }
+
+  ::selection {
+    @apply bg-futuristic-blue/20 text-futuristic-text-primary;
+  }
+  
+  /* Custom scrollbar for modal content */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-futuristic-darker/50;
+    border-radius: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-futuristic-blue/30 rounded-full;
+    backdrop-filter: blur(12px);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-futuristic-blue/50;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)];
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Add glass reflection effect to cards */
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.03) 40%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.03) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    pointer-events: none;
+    z-index: 1;
+    transition: transform 0.8s ease-in-out;
+  }
+  
+  .glass-card:hover::before {
+    transform: rotate(45deg) translate(50%, 50%);
+  }
+
+  .text-gradient {
+    position: relative;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+  }
+  
+  .text-gradient::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg, 
+      rgba(0, 168, 255, 0.8), 
+      rgba(155, 135, 245, 0.8)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    z-index: -1;
+  }
+
+  .glow {
+    @apply relative;
+    overflow: hidden;
+  }
+
+  /* Replace glow with glass shine effect */
+  .glow::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 40%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg) translateY(-100%);
+    pointer-events: none;
+    transition: transform 1.2s ease-in-out;
+    z-index: 1;
+  }
+
+  .glow:hover::after {
+    transform: rotate(45deg) translateY(100%);
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12;
+    position: relative;
+    color: #ffffff;
+  }
+  
+  /* Add a subtle gleam to section titles */
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      to right, 
+      rgba(0, 168, 255, 0),
+      rgba(0, 168, 255, 0.7),
+      rgba(155, 135, 245, 0.7),
+      rgba(0, 168, 255, 0)
+    );
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-futuristic-text-secondary mb-6 md:mb-8 max-w-2xl mx-auto;
+  }
+
+  .perspective-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .skill-card {
+    @apply glass-card p-6 rounded-xl transition-all duration-500 h-full;
+    transform-style: preserve-3d;
+  }
+  
+  .skill-card:hover {
+    transform: translateZ(20px) rotateX(5deg) rotateY(5deg);
+    @apply shadow-[0_10px_30px_rgba(0,168,255,0.3)];
+  }
+
+  .animated-border-box {
+    @apply relative rounded-lg p-0.5 overflow-hidden;
+    z-index: 0;
+  }
+  
+  /* Replace animated border with subtle reflection */
+  .animated-border-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 168, 255, 0.1),
+      rgba(155, 135, 245, 0.1)
+    );
+    border-radius: inherit;
+    z-index: -1;
+  }
+  
+  /* Add glass shine effect to border box */
+  .animated-border-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.03) 40%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.03) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg) translateY(-100%);
+    transition: transform 1s ease-in-out;
+    z-index: 0;
+  }
+  
+  .animated-border-box:hover::after {
+    transform: rotate(45deg) translateY(100%);
+  }
+  
+  .grid-background {
+    @apply bg-grid-pattern bg-grid-50;
+    background-position: center;
+  }
+  
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+  
+  .snap-section {
+    scroll-snap-align: start;
+    height: 100vh;
+  }
+
+  /* Section transition animations */
+  .animate-reveal-right {
+    animation: reveal-right 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .animate-reveal-left {
+    animation: reveal-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@layer utilities {
+  .mask-radial-gradient {
+    mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  }
+  
+  .filter-none {
+    filter: none;
+  }
+  
+  .invert-white {
+    filter: brightness(0) invert(1);
+  }
+  
+  .backdrop-saturate-200 {
+    backdrop-filter: saturate(2) blur(20px);
+  }
+}
+
+/* Section animations keyframes */
+@keyframes reveal-right {
+  0% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-left {
+  0% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* New animation keyframes for scale effect */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
