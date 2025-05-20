@@ -75,6 +75,14 @@ const About: React.FC = () => {
                       <p className="mt-2">Developed and maintained custom WordPress and Shopify websites across various industries. Built tailored WordPress plugins, handled server-level optimizations, and ensured performance, security, and stability across all projects. Contributed to 20+ websites including corporate platforms, e-commerce stores, and landing pages.</p>
                     </div>
                   </div>
+
+                  <div className="animated-border-box">
+                    <div className="glass-card p-5 rounded-lg">
+                      <h4 className="text-lg font-semibold text-futuristic-purple-light">General & Technical</h4>
+                      <p className="text-sm text-futuristic-text-secondary mt-1">Feer McQueen – Jeita</p>
+                      <p className="mt-2">Managed projects and clients, handled both general and technical responsibilities, and ensured successful delivery of digital solutions.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Card3D>
